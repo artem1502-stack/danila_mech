@@ -30,7 +30,6 @@ double *get_array(FILE *f, int *len)
 	int n = 0, cur_max_len = 20;
 
 	arr = (double *)malloc(cur_max_len * sizeof(double));
-
 	while (fscanf(f, "%lf", &x) == 1)
 	{
 		arr[n] = x;
@@ -41,7 +40,6 @@ double *get_array(FILE *f, int *len)
 			arr = (double *)realloc(arr, cur_max_len * sizeof(double));
 		}
 	}
-
 	*len = n;
 	return arr;
 }
@@ -57,9 +55,7 @@ int change_arr(double *arr, int n)
 		if (arr[i] < arr_min)
 			arr_min = arr[i];
 	}
-
 	i = 1;
-	
 	if (arr[0] <= arr[1])
 		while ((i < n) && (fabs(arr[0] - arr[i]) < EPS))
 			i++;
@@ -73,13 +69,8 @@ int change_arr(double *arr, int n)
 			arr[j + 1] = arr[i + j];
 		}
 		arr[0] = arr_min;
-	}
-	//memmove(arr + 1, arr + i, (n - i)*sizeof(double));
-	
-
+	}	
 	n -= i - 1;
-
-	
 	for (i = 1; i < n - 1; i++)
 	{
 		if (arr[i] < arr[i - 1])
@@ -112,7 +103,6 @@ int change_arr(double *arr, int n)
 			}
 	}
 	return n;
-
 }
 
 
