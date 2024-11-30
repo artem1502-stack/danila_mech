@@ -77,6 +77,7 @@ void delete_element(int *arr, int n, int index)
 
 int change_arr(int *arr, int n)
 {
+	// Инициализация переменных
 	int els[3][2];
 	int flag[3];
 
@@ -90,6 +91,7 @@ int change_arr(int *arr, int n)
 	flag[1] = 0;
 	flag[2] = 0;
 
+	// Первое заполнение элементов els
 	find_inter(arr, n, 0, &start, &end);
 
 	if (start == -1)
@@ -101,6 +103,7 @@ int change_arr(int *arr, int n)
 		els[i][1] = 1;
 	}
 
+	// Основной цикл, где мы пробегаем интервалами и ищем элементы
 	for (find_inter(arr, n, end + 1, &start, &end); start != -1; find_inter(arr, n, end + 1, &start, &end))
 	{
 		for (i = 0; i + start + 1 < end; i++)
@@ -118,6 +121,7 @@ int change_arr(int *arr, int n)
 	if (els[0][1] + els[1][1] + els[2][1] == 0)
 		return n;
 
+	// Второй проход, где мы удаляем найденные элементы
 	for (find_inter(arr, n, 0, &start, &end); start != -1; find_inter(arr, n, end + 1, &start, &end))
 	{
 		for (i = 0; i + start + 1 < end; i++)
