@@ -145,14 +145,15 @@ int main(void)
 {
 	int *arr;
 	int n;
-	time_t t;
+	clock_t t1, t2;
 
 	printf("Enter array len:\n");
 	scanf("%d", &n);
 	arr = get_random_array(n);
-	t = time(NULL);
+	t1 = clock();
 	quick_sort(arr, n);
-	printf("Time spended = %ld seconds\n", time(NULL) - t);
+	t2 = clock();
+	printf("Time spended = %lf seconds\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
 	if (is_sorted(arr, 0, n - 1))
 		printf("Array is sorted\n");
 	else
