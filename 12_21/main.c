@@ -18,8 +18,12 @@ double *get_intervals(int n, FILE *f)
 
 	for(i = 0; i < n; ++i)
 	{
-		fscanf(f, "%lf", &a);
-		fscanf(f, "%lf", &b);
+		if ((fscanf(f, "%lf", &a) != 1) || (fscanf(f, "%lf", &b) != 1))
+		{
+			printf("Error: incorrect input");
+			free(arr);
+			return NULL;
+		}
 		if (b < a)
 			swap(&a, &b);
 		arr[2 * i] = a;
@@ -139,6 +143,7 @@ int main(void)
 	print_intervals(arr, n);
 	arr = merge_intervals(arr, &n);
 	print_intervals(arr, n);
+
 	if (is_in_interavals(arr, n, a, b))
 		printf("Yes\n");
 	else
