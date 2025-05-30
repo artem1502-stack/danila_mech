@@ -9,8 +9,11 @@ static void t_fun(char **s)
 	x++;
 }
 
+
+
 int line_to_array(FILE *f, int ***arr, int *m, int n_cur, int n_max, int *el_cur, int *el_max)
 {
+	//убери static и t_fun(&line)
 	static char *line;
 	char *cur_line;
 	size_t len = 0, index = 0;
@@ -25,6 +28,8 @@ int line_to_array(FILE *f, int ***arr, int *m, int n_cur, int n_max, int *el_cur
 //	Когда он не считывает строку - он кладёт в len максимум
 //	Максимум size_t можно получить, если из 0 вычесть 1
 //	т.к. он циклический
+	if (len <= 1)
+		return 2;
 	if (len == ((size_t)0 - 1))
 	{
 		//free(line);
@@ -90,6 +95,8 @@ int resize_lines(int ***arr, int **m, int n, int n_max, int size)
 	return n_max;
 }
 
+//	NULL == (void *)0
+
 int **read_hard_array(FILE *f, int *n)
 {
 	int n_cur = 0, n_max = START_LINE_MAX, el_cur = 0, el_max = START_ELEMENT_MAX, res;
@@ -103,6 +110,9 @@ int **read_hard_array(FILE *f, int *n)
 	
 	res = line_to_array(f, &arr, m, n_cur, n_max, &el_cur, &el_max);
 	
+	while (res == 2)
+		res = line_to_array(f, &arr, m, n_cur, n_max, &el_cur, &el_max);
+
 	n_cur++;
 	if (res != 1)
 	{
@@ -121,6 +131,8 @@ int **read_hard_array(FILE *f, int *n)
 			n_max = resize_lines(&arr, &m, n_cur, n_max, el_max);
 		}
 		res = line_to_array(f, &arr, m, n_cur, n_max, &el_cur, &el_max);
+		if (res == 2)
+			continue;
 		if (res != 1)
 			break ;
 		n_cur++;
@@ -170,19 +182,19 @@ void fprint_hard(FILE *f, int **arr, int n)
 index = 2
 					 p    p + len
 		   *0  *1   *2    *3
-*0 *1 *2 *3|012 0123 01234 01
+*0 *1 *2 *3|012 0123 01234 78
 
 1)
 		   *0  *1   *2    *3
-*0 *1 *2 *3|012 0123 01
+*0 *1 *2 *3|012 0123 78
 
 2)
 		    *0   *1   *3
-*0 *1 *2 *3| 012 0123 01
+*0 *1 *2 *3|012 0123 78
 
 3)
-		 *0  *1   *3
-*0 *1 *3|012 0123 01
+		    *0  *1   *3
+*0 *1 *3 *3|012 0123 78
 
 */
 

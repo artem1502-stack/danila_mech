@@ -6,6 +6,7 @@
 #include <string.h>
 
 #define BUFFER_SIZE 1024
+
 #define START_LINE_MAX 4
 #define START_ELEMENT_MAX 8
 
